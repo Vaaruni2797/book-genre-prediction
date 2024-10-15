@@ -39,25 +39,35 @@ class TextPreprocessing:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def initiate_text_preprocessing(self, text_data):
+    def initiate_text_preprocessing(self, text_data, is_train=True):
         '''
-        This function applies the preprocessing object to the given text data
+        This function applies the preprocessing object to the given text data.
+        If `is_train` is True, it will fit and transform the data (train dataset).
+        Otherwise, it will only transform the data (test dataset).
         '''
         try:
+            text_df = pd.read_csv(text_data)
             logging.info("Starting text preprocessing")
-            
+
             text_preprocessing_obj = self.get_text_preprocessor_object()
 
-            text_data['summary'] = text_preprocessing_obj.fit_transform(text_data['summary'])
-            
-            logging.info("Text preprocessing completed")
+            if is_train:
+                # For training data, use fit_transform
+                text_df['summary'] = [text_preprocessing_obj.fit_transform([text])[0] for text in text_df['summary']]
+                logging.info("Text preprocessing (fit_transform) completed for training data")
+            else:
+                # For testing data, use transform
+                text_df['summary'] = [text_preprocessing_obj.transform([text])[0] for text in text_df['summary']]
+                logging.info("Text preprocessing (transform) completed for test data")
 
-            save_object(
-                file_path=self.text_preprocessing_config.preprocessor_obj_file_path,
-                obj=text_preprocessing_obj
-            )
-            
-            return text_data, self.text_preprocessing_config.preprocessor_obj_file_path
+            # Save the preprocessing object only if training
+            if is_train:
+                save_object(
+                    file_path=self.text_preprocessing_config.preprocessor_obj_file_path,
+                    obj=text_preprocessing_obj
+                )
+
+            return text_df, self.text_preprocessing_config.preprocessor_obj_file_path
 
         except Exception as e:
             raise CustomException(e, sys)

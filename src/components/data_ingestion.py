@@ -52,7 +52,7 @@ if __name__=="__main__":
 
     text_preprocessing = TextPreprocessing()
     train_arr,_ = text_preprocessing.initiate_text_preprocessing(train_data)
-    test_arr,_ = text_preprocessing.initiate_text_preprocessing(test_data)
+    test_arr,_ = text_preprocessing.initiate_text_preprocessing(test_data, is_train=False)
 
     model_trainer = ModelTrainer()
     print(model_trainer.initiate_model_trainer(train_arr, test_arr))
