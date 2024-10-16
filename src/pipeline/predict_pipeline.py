@@ -21,9 +21,15 @@ class PredictPipeline:
 
             data_scaled = preprocessor.transform(features)
             data_vectorized = vectorizer.transform(data_scaled)
-            preds  = model.predict(data_vectorized)
+            
+            pred_proba = model.predict_proba(data_vectorized)
+            top_pred_idx = pred_proba.argmax(axis=1)
+            predicted_genre = label_encoder.inverse_transform(top_pred_idx)
+            
+            all_genres = label_encoder.classes_
+            sorted_probabilities = sorted(zip(pred_proba[0], all_genres), reverse=True)
 
-            return label_encoder.inverse_transform(preds)
+            return predicted_genre, sorted_probabilities
         
         except Exception as e:
             raise CustomException(e, sys)

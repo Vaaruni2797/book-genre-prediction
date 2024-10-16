@@ -4,12 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 36px;
+            color: #5a5a5a;
+        }
+        .button-container {
+            margin: 30px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .genre-list {
+            margin-top: 50px;
+            display: inline-block;
+            text-align: left;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .genre-list h2 {
+            color: #444;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        li span {
+            color: #888;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to Book Genre Prediction</h1>
     
-    <!-- Button that redirects to another page -->
-    <button onclick="window.location.href='predictdata';">Let's predict the Book Genre</button>
+    <div class="button-container">
+        <button onclick="window.location.href='predictdata';">Let's predict the Book Genre</button>
+    </div>
     
+    <div class="genre-list">
+        <h2>Available Genres</h2>
+        <ul>
+            <li>Thriller</li>
+            <li>Fantasy</li>
+            <li>Science</li>
+            <li>History</li>
+            <li>Horror</li>
+            <li>Crime</li>
+            <li>Romance</li>
+            <li>Psychology</li>
+            <li>Sports</li>
+            <li>Travel</li>
+        </ul>
+    </div>
 </body>
 </html>

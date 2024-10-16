@@ -24,8 +24,9 @@ def predict_datapoint():
 
         pred_df = data.get_data_as_data_frame()
         predict_pipeline = PredictPipeline()
-        results = predict_pipeline.predict(pred_df['summary'])
-        return render_template('home.html', results = results[0])
+        results, probabilities = predict_pipeline.predict(pred_df['summary'])
+
+        return render_template('home.html', results = results[0], probabilities=probabilities)
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
