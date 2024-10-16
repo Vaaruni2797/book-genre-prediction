@@ -114,3 +114,4 @@ class StemTextTransformer(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         stemmer = PorterStemmer()
         return [' '.join([stemmer.stem(word) for word in text.split()]) for text in X]
+    

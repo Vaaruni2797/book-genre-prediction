@@ -8,6 +8,10 @@ from dataclasses import dataclass
 
 from src.components.text_preprocessing import TextPreprocessing
 from src.components.text_preprocessing import TextPreprocessingConfig
+from src.components.vectorizer import Vectorizing
+from src.components.vectorizer import VectorizingConfig
+from src.components.label_encoder import LabelEncoding
+from src.components.label_encoder import LabelEncodingConfig
 from src.components.model_trainer import ModelTrainer
 from src.components.model_trainer import ModelTrainerConfig
 @dataclass
@@ -31,7 +35,7 @@ class DataIngestion:
             df.to_csv(self.ingestion_config.raw_data_path, index =False, header = True)
 
             logging.info("Train test split initiated")
-            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
+            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42, stratify=df['genre'])
 
             train_set.to_csv(self.ingestion_config.train_data_path, index= False, header=True)
             test_set.to_csv(self.ingestion_config.test_data_path, index= False, header=True)
@@ -54,5 +58,11 @@ if __name__=="__main__":
     train_arr,_ = text_preprocessing.initiate_text_preprocessing(train_data)
     test_arr,_ = text_preprocessing.initiate_text_preprocessing(test_data, is_train=False)
 
+    vectorizer = Vectorizing()
+    X_train, y_train, X_test, y_test = vectorizer.initiate_vectorizing(train_arr, test_arr)
+
+    label_encoder = LabelEncoding()
+    y_train_encoded, y_test_encoded = label_encoder.initiate_label_encoding(y_train, y_test)
+
     model_trainer = ModelTrainer()
-    print(model_trainer.initiate_model_trainer(train_arr, test_arr))
+    print(model_trainer.initiate_model_trainer(X_train, y_train_encoded, X_test, y_test_encoded))
