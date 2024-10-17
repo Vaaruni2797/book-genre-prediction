@@ -6,4 +6,5 @@ matplotlib
 scikit-learn
 dill
 flask
+plotly
 -e .
