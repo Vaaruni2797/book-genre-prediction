@@ -7,4 +7,5 @@ scikit-learn
 dill
 flask
 plotly
+streamlit
 -e .
