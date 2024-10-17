@@ -7,8 +7,10 @@ from src.utils import load_object
 
 try:
     nltk.data.find('corpora/stopwords')
+    nltk.data.find('corpora/wordnet')
 except LookupError:
     nltk.download('stopwords')
+    nltk.download('wordnet')
 
 
 class PredictPipeline:
