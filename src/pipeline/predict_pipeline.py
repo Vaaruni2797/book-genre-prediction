@@ -1,8 +1,15 @@
 import os
 import sys
+import nltk
 import pandas as pd
 from src.exception import CustomException
 from src.utils import load_object
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+
 
 class PredictPipeline:
     def __init__(self):
